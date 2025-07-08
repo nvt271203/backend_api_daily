@@ -20,7 +20,7 @@ const leaveSchema = mongoose.Schema(
         },
         leaveTimeType: {
             type: String,
-            enum: ['FullDay', 'Morning', 'Afternoon'],
+            enum: ['Full Time', 'Part Time'],
             required: true,
         },
         reason: {
