@@ -4,9 +4,9 @@ const workRouter = express.Router(); // Khởi tạo một router cho các API l
 
 workRouter.post('/api/work', async (req, res) => {
     try {
-        const { checkInTime, checkOutTime, workTime, report, plan, result, userId } = req.body;
+        const { checkInTime, checkOutTime, workTime, report, plan, note, userId } = req.body;
         // Tạo một công việc mới vớ i các thông tin từ yêu cầu
-        const work = new Work({ checkInTime, checkOutTime, workTime, report, plan, result, userId });
+        const work = new Work({ checkInTime, checkOutTime, workTime, report, plan, note, userId });
         // Lưu công việc vào cơ sở dữ liệu
         await work.save();
         res.status(201).json(work); // Trả về công việc đã tạo với mã trạng thái 201 (Created)

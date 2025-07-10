@@ -23,9 +23,9 @@ const workSchema = mongoose.Schema(
             required: true,
             trim: true,
         },
-        result: {
+        note: {
             type: String,
-            required: true,
+            // required: true,
             trim: true,
         },
         userId: {
