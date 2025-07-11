@@ -3,17 +3,14 @@ const userSchema = mongoose.Schema(
     {
     fullName:{
         type: String,
-        required: true,
         trim: true,
     },
     birthDay:{
         type: String,
-        required: true,
         trim: true,
     },
     sex:{
         type: String,
-        required: true,
         trim: true,
     },
     email:{
