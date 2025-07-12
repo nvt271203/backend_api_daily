@@ -15,6 +15,11 @@ const cors = require('cors');
 app.use(cors());
 //---------------------------------------------
 app.use(express.json()); // Middleware để phân tích dữ liệu JSON trong yêu cầu HTTP 
+
+
+app.get('/api/ping', (req, res) => {
+  res.status(200).send('pong');
+});
 app.use(userRouter); // Sử dụng router người dùng để xử lý các yêu cầu liên quan đến người dùng
 app.use(workRouter); // Sử dụng router công việc để xử lý các yêu cầu liên quan đến công việc
 app.use(leaveRouter); // Sử dụng router nghỉ phép để xử lý các yêu cầu liên quan đến nghỉ phép

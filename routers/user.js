@@ -41,7 +41,7 @@ authRouter.post('/api/login', async (req, res) => {
         }else{
             const isMatch = await bcrypt.compare(password, findUser.password); // so sánh mật khẩu chưa mã hoá với mật khẩu đã mã hóa trong cơ sở dữ liệu
             if (!isMatch) {
-                return res.status(400).json({ message: 'Password is incorrect, please re-enter passw' });
+                return res.status(400).json({ message: 'Password is incorrect, please re-enter password' });
             }else{
                 // Tạo token định danh người dùng đã đăng nhập thành công
                 const token = jwt.sign({id: findUser._id}, "passwordKey");
