@@ -28,6 +28,46 @@ leaveRouter.get('/api/leave/:userId', async (req, res) => {
     }
 }); 
 
+
+leaveRouter.delete('/api/leave/:id', async (req, res) => {
+    try {
+        const { id } = req.params; // Lấy ID đơn phép từ tham số URL
+        const deletedLeave = await Leave.findByIdAndDelete(id); // Xóa đơn phép theo ID
+
+        if (!deletedLeave) {
+            return res.status(404).json({ message: 'Leave not found' }); // Trả về lỗi nếu không tìm thấy đơn phép
+        }
+        res.status(200).json({ message: 'Leave deleted successfully' }); // Trả về thông báo thành công
+    } catch (e) {
+        res.status(500).json({ error: e.message }); // Trả về lỗi nếu có vấn đề xảy ra
+    }
+});
+
+leaveRouter.put('/api/leave/:id', async (req, res) => {
+    try {
+        const { id } = req.params; // Lấy ID đơn phép từ tham số URL
+        const {dateCreated, startDate, endDate, leaveType, leaveTimeType, reason, userId  } = req.body; // Lấy các thông tin cập nhật từ yêu cầu
+
+        // Cập nhật đơn phép theo ID
+        const updatedLeave = await Leave.findByIdAndUpdate(id, {
+           dateCreated,
+            startDate,
+            endDate,
+            leaveType,
+            leaveTimeType,
+            reason,
+            userId
+        }, { new: true });
+
+        if (!updatedLeave) {
+            return res.status(404).json({ message: 'Leave not found' }); // Trả về lỗi nếu không tìm thấy đơn phép
+        }
+        res.status(200).json(updatedLeave); // Trả về đơn phép đã cập nhật
+    } catch (e) {
+        res.status(500).json({ error: e.message }); // Trả về lỗi nếu có vấn đề xảy ra
+    }
+});
+
 leaveRouter.get('/api/leave', async (req, res) => {
     try {
         const leaves = await Leave.find(); // Lấy tất cả đơn xin nghỉ phép từ cơ sở dữ liệu

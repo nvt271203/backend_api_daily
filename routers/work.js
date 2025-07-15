@@ -38,5 +38,50 @@ workRouter.get('/api/work', async (req, res) => {
         res.status(500).json({ error: e.message }); // Trả về lỗi nếu có vấn đề xảy ra
     }
 });
+
+
+
+
+workRouter.get('/api/work_checkin/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params; // Lấy ID công việc từ tham số URL
+
+        // Lấy bản ghi mới nhất của user chưa check-out
+        const latestWork = await Work.findOne({
+        userId,
+        workTime: null, // hoặc checkInTime == checkOutTime nếu bạn muốn thay đổi
+        })
+        .sort({ checkInTime: -1 })
+        .exec();
+        
+        if (!latestWork) {
+            return res.status(404).json({ message: 'Work_checkin not found' }); // Trả về lỗi nếu không tìm thấy công việc
+        }
+        return res.status(200).json(latestWork); // Trả về mã trạng thái // Trả về công việc đã cập nhật
+    } catch (e) {
+        res.status(500).json({ error: e.message }); // Trả về lỗi nếu có vấn đề xảy ra
+    }
+});
+
+workRouter.put('/api/work/:id', async (req, res) => {
+    try {
+        const { id } = req.params; // Lấy ID công việc từ tham số URL
+        const {checkOutTime, workTime, report, plan, note} = req.body; // Lấy các thông tin cập nhật từ yêu cầu
+        const updateWork = await Work.findByIdAndUpdate(
+            id, 
+            { checkOutTime, workTime, report, plan, note }, // Cập nhật các trường cần thiết
+            { new: true } // Trả về tài liệu đã cập nhật
+        );
+
+        
+        if (!updateWork) {
+            return res.status(404).json({ message: 'Work not found' }); // Trả về lỗi nếu không tìm thấy công việc
+        }
+        return res.status(200).json(updateWork); // Trả về mã trạng thái // Trả về công việc đã cập nhật
+    } catch (e) {
+        res.status(500).json({ error: e.message }); // Trả về lỗi nếu có vấn đề xảy ra
+    }
+});
+    
 module.exports = workRouter; // Xuất router để sử dụng trong các tệp khác
 // Đây là các API liên quan đến công việc, bao gồm tạo công việc mới và lấy

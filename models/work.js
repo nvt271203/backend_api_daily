@@ -7,20 +7,20 @@ const workSchema = mongoose.Schema(
         },
         checkOutTime: {
             type: Date,
-            required: true,
+            // required: true,
         },
         workTime: {
             type: Number,
-            required: true,
+            // required: true,
         },
         report: {
             type: String,
-            required: true,
+            // required: true,
             trim: true,
         },
         plan: {
             type: String,
-            required: true,
+            // required: true,
             trim: true,
         },
         note: {
